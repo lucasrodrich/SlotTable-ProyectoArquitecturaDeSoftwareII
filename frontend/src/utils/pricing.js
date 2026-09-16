@@ -32,12 +32,15 @@ export const calculateReservationPricing = (reservation) => {
   let discountPercent = 0;
   const date = dateValue ? new Date(dateValue) : null;
   if (date) {
-    // Early bird para cenas antes de 18 hs
-    if (mealType === 'dinner' && date.getHours() < 18) {
+    // El backend (Go) lee Hour()/Weekday() sobre el time.Time parseado del
+    // ISO "...Z", es decir en UTC. Si acá usamos getHours()/getDay() (hora
+    // local del navegador), un mismo date_time cae en un día/hora distinto
+    // según la zona horaria del cliente y el descuento mostrado diverge del
+    // que realmente aplica el backend - hay que leer en UTC para que coincida.
+    if (mealType === 'dinner' && date.getUTCHours() < 18) {
       discountPercent += 10;
     }
-    // Descuento lunes-jueves
-    const day = date.getDay(); // 0=Domingo, 1=Lunes
+    const day = date.getUTCDay(); // 0=Domingo, 1=Lunes
     if (day >= 1 && day <= 4) {
       discountPercent += 5;
     }
@@ -54,9 +57,11 @@ export const calculateReservationPricing = (reservation) => {
   }
 
   const computedFinal = basePrice - (basePrice * discountPercent) / 100;
-  // Preferimos el valor calculado para reflejar descuentos; si algo falla, usamos el provisto por la API.
+  // La API es la fuente de verdad (el backend es quien calcula el precio real
+  // de la reserva); el cálculo de acá es solo un fallback para cuando todavía
+  // no hay total_price (por ejemplo, en el preview antes de confirmar).
   const apiTotal = reservation.total_price ?? reservation.totalPrice;
-  const finalPrice = Number.isFinite(apiTotal) ? Math.min(apiTotal, computedFinal) : computedFinal;
+  const finalPrice = Number.isFinite(apiTotal) ? apiTotal : computedFinal;
 
   return {
     basePrice,

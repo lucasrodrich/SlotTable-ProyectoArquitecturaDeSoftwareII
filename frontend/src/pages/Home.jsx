@@ -15,9 +15,9 @@ import { useAuth } from '../hooks/useAuth';
 import { useCreateReservation } from '../hooks/useReservations';
 
 const highlightCards = [
-  { label: 'Reservas activas', value: '1.200+', description: 'Movimientos confirmados en los últimos 30 días' },
-  { label: 'Aliados gastronómicos', value: '85', description: 'Restaurantes integrados a SlotTable' },
-  { label: 'Velocidad promedio', value: '~45s', description: 'Desde la solicitud hasta la confirmación' },
+  { label: 'Búsqueda', value: 'Apache Solr', description: 'Índice dedicado, separado de la base transaccional' },
+  { label: 'Sincronización', value: 'RabbitMQ', description: 'Eventos asíncronos entre reservas y búsqueda' },
+  { label: 'Caché', value: '2 capas', description: 'Local + Memcached, con invalidación por evento' },
 ];
 
 const Home = () => {
