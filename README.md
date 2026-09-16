@@ -21,6 +21,8 @@ A restaurant reservation platform looks trivial until it has to handle real load
 
 This was built as the final project for **Arquitectura de Software II** (Universidad Católica de Córdoba) by a 4-person team. The tech stack (Go, MySQL, MongoDB, Solr, RabbitMQ, dual-layer caching, React, Docker Compose) was specified by the assignment; the decisions below are about how we used it, not whether to use it.
 
+I've also worked on SportLink and Dosis (confidential, unpublished).
+
 ## Screenshots
 
 | | |
