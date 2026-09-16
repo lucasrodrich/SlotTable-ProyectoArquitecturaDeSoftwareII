@@ -156,7 +156,10 @@ func TestSearchService_Search_WithCache(t *testing.T) {
 		},
 	}
 
-	cacheLayer := cache.NewDual(0, nil, nil)
+	// Non-zero TTL: this test asserts a cached value stays retrievable, so a
+	// zero TTL (expires = time.Now() at Set time) would make it always miss -
+	// deterministically, not just flaky, once the clock has real resolution.
+	cacheLayer := cache.NewDual(time.Minute, nil, nil)
 	service := NewSearchService(mockRepo, cacheLayer, nil, nil, 30)
 
 	query := repository.SearchQuery{
@@ -261,7 +264,7 @@ func TestSearchService_Stats_Success(t *testing.T) {
 
 func TestSearchService_InvalidateAll(t *testing.T) {
 	mockRepo := &mockSearchRepository{}
-	cacheLayer := cache.NewDual(0, nil, nil)
+	cacheLayer := cache.NewDual(time.Minute, nil, nil)
 	service := NewSearchService(mockRepo, cacheLayer, nil, nil, 30)
 
 	// Set a value in cache first
@@ -284,7 +287,7 @@ func TestSearchService_InvalidateAll(t *testing.T) {
 
 func TestSearchService_GetCacheValue(t *testing.T) {
 	mockRepo := &mockSearchRepository{}
-	cacheLayer := cache.NewDual(0, nil, nil)
+	cacheLayer := cache.NewDual(time.Minute, nil, nil)
 	service := NewSearchService(mockRepo, cacheLayer, nil, nil, 30)
 
 	key := "test-key"
