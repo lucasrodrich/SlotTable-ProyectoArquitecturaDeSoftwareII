@@ -21,6 +21,16 @@ A restaurant reservation platform looks trivial until it has to handle real load
 
 This was built as the final project for **Arquitectura de Software II** (Universidad Católica de Córdoba) by a 4-person team. The tech stack (Go, MySQL, MongoDB, Solr, RabbitMQ, dual-layer caching, React, Docker Compose) was specified by the assignment; the decisions below are about how we used it, not whether to use it.
 
+## Screenshots
+
+| | |
+|---|---|
+| ![Login](docs/screenshots/01-login.png) Login | ![Home search](docs/screenshots/02-home-search.png) Home / search |
+| ![Home filtered (dinner)](docs/screenshots/03-home-filtered-dinner.png) Home filtered (dinner) | ![Create reservation](docs/screenshots/04-create-reservation.png) Create reservation |
+| ![My reservations](docs/screenshots/05-my-reservations.png) My reservations | ![Reservation details](docs/screenshots/06-reservation-details.png) Reservation details |
+| ![Admin dashboard](docs/screenshots/07-admin-dashboard.png) Admin dashboard | ![Admin tables](docs/screenshots/08-admin-tables.png) Admin tables |
+| ![Home dark mode](docs/screenshots/09-home-dark-mode.png) Home (dark mode) | |
+
 ## Architecture
 
 ```mermaid
