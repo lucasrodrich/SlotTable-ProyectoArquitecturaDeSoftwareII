@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  build-users-api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/build-push-action@v7
+        with:
+          context: ./users-api
+          push: false
+          tags: users-api:ci
+          cache-from: type=gha,scope=users-api
+          cache-to: type=gha,mode=max,scope=users-api
+
+  build-reservations-api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/build-push-action@v7
+        with:
+          context: ./reservations-api
+          push: false
+          tags: reservations-api:ci
+          cache-from: type=gha,scope=reservations-api
+          cache-to: type=gha,mode=max,scope=reservations-api
+
+  build-search-api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/build-push-action@v7
+        with:
+          context: ./search-api
+          push: false
+          tags: search-api:ci
+          cache-from: type=gha,scope=search-api
+          cache-to: type=gha,mode=max,scope=search-api
+
+  build-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/build-push-action@v7
+        with:
+          context: ./frontend
+          push: false
+          tags: frontend:ci
+          cache-from: type=gha,scope=frontend
+          cache-to: type=gha,mode=max,scope=frontend
+
+  go-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service: [users-api, reservations-api, search-api]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: ${{ matrix.service }}/go.mod
+          cache-dependency-path: ${{ matrix.service }}/go.sum
+      - working-directory: ${{ matrix.service }}
+        run: go test ./...

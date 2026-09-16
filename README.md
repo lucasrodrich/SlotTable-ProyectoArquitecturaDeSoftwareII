@@ -5,6 +5,7 @@
 <h1 align="center">SlotTable</h1>
 
 <p align="center">
+  <a href="https://github.com/lucasrodrich/SlotTable-ProyectoArquitecturaDeSoftwareII/actions/workflows/ci.yml"><img src="https://github.com/lucasrodrich/SlotTable-ProyectoArquitecturaDeSoftwareII/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
   <img src="https://img.shields.io/badge/frontend-React%2019-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React" />
   <img src="https://img.shields.io/badge/backend-Go%20microservices-00ADD8?style=flat-square&logo=go&logoColor=white" alt="Go" />
   <img src="https://img.shields.io/badge/search-Apache%20Solr-D9411E?style=flat-square&logo=apache&logoColor=white" alt="Solr" />
